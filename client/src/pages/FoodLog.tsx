@@ -46,7 +46,7 @@ const FoodLog = () => {
 
     try {
       const { data } = await api.post("/api/food-logs", { data: formData });
-      setAllFoodLogs((prev) => [...prev, data.data]);
+      setAllFoodLogs((prev) => [...prev, data]);
       setFormData({ name: "", calories: 0, mealType: "" });
       setShowForm(false);
     } catch (error) {
@@ -61,7 +61,7 @@ const FoodLog = () => {
 
       await api.delete(`/api/food-logs/${id}`);
       setAllFoodLogs((prev) =>
-        prev.filter((e: any) => e.id !== Number(id))
+        prev.filter((e: any) => e.documentId !== id)
       );
     } catch (error) {
       console.log(error);
@@ -111,7 +111,7 @@ const FoodLog = () => {
         },
       });
 
-      setAllFoodLogs((prev) => [...prev, newEntry.data]);
+      setAllFoodLogs((prev) => [...prev, newEntry]);
 
       if (inputRef.current) inputRef.current.value = "";
     } catch (error) {

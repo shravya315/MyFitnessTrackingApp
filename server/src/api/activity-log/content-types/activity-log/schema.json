@@ -20,11 +20,11 @@
     "calories": {
       "type": "integer"
     },
-    "users_permissions_users": {
+    "users_permissions_user": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "activity_log"
+      "inversedBy": "activity_logs"
     }
   }
 }

@@ -138,7 +138,7 @@ const ActivityLog = () => {
                   placeholder="e.g., Morning Run"
                   required
                   value={formData.name}
-                  onChange={(v) => setFormData({ ...formData, name: v.toString() })}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
 
                 <div className="flex gap-4">
