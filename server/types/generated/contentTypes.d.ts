@@ -457,8 +457,8 @@ export interface ApiActivityLogActivityLog extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_users: Schema.Attribute.Relation<
-      'oneToMany',
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -956,8 +956,8 @@ export interface PluginUsersPermissionsUser
     draftAndPublish: false;
   };
   attributes: {
-    activity_log: Schema.Attribute.Relation<
-      'manyToOne',
+    activity_logs: Schema.Attribute.Relation<
+      'oneToMany',
       'api::activity-log.activity-log'
     >;
     age: Schema.Attribute.Integer;
@@ -967,14 +967,14 @@ export interface PluginUsersPermissionsUser
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    dailyCaloriesBurn: Schema.Attribute.Integer;
-    dailyCaloriesIntake: Schema.Attribute.Integer;
+    dailyCalorieBurn: Schema.Attribute.Integer;
+    dailyCalorieIntake: Schema.Attribute.Integer;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
-    food_log: Schema.Attribute.Relation<'manyToOne', 'api::food-log.food-log'>;
+    food_logs: Schema.Attribute.Relation<'oneToMany', 'api::food-log.food-log'>;
     goal: Schema.Attribute.String;
     height: Schema.Attribute.Decimal;
     locale: Schema.Attribute.String & Schema.Attribute.Private;

@@ -36,25 +36,6 @@ const Onboarding = () => {
 
     if (step < totalSteps) {
       setStep(step + 1);
-    } else {
-      const userData = {
-        ...formData,
-        age: formData.age,
-        weight: formData.weight,
-        height: formData.height ? formData.height : null,
-        createdAt: new Date().toISOString(),
-      };
-
-      localStorage.setItem("fitnessUser", JSON.stringify(userData));
-
-      try {
-        await api.put(`/api/users/${user?.id}`, userData);
-        // toast.success("Profile updated successfully");
-        setOnboardingCompleted(true);
-        fetchUser(user?.token || "");
-      } catch (error: any) {
-        // toast.error(error.message);
-      }
     }
   };
 
@@ -62,9 +43,22 @@ const Onboarding = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = () => {
-    setOnboardingCompleted(true);
-    navigate("/");
+  const handleSubmit = async () => {
+    const userData = {
+      ...formData,
+      age: Number(formData.age),
+      weight: Number(formData.weight),
+      height: formData.height ? Number(formData.height) : null,
+    };
+
+    try {
+      await api.put(`/api/users/${user?.id}`, userData);
+      setOnboardingCompleted(true);
+      await fetchUser(user?.token || "");
+      navigate("/");
+    } catch (error: any) {
+      console.error(error);
+    }
   };
 
   return (

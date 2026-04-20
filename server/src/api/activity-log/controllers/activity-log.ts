@@ -17,7 +17,7 @@ export default factories.createCoreController('api::activity-log.activity-log', 
       'api::activity-log.activity-log',
       {
         data: body,
-        populate: ['users_permissions_users'],
+        populate: ['users_permissions_user'],
       }
     );
 
@@ -30,8 +30,8 @@ export default factories.createCoreController('api::activity-log.activity-log', 
     const result = await strapi.entityService.findMany(
       'api::activity-log.activity-log',
       {
-        filters: { users_permissions_users: user.id },
-        populate: ['users_permissions_users'],
+        filters: { users_permissions_user: user.id },
+        populate: ['users_permissions_user'],
       }
     );
 
@@ -46,7 +46,7 @@ export default factories.createCoreController('api::activity-log.activity-log', 
       'api::activity-log.activity-log',
       id,
       {
-        populate: ['users_permissions_users'],
+        populate: ['users_permissions_user'],
       }
     )
     if(!result) return ctx.notFound("Not found or not yours")

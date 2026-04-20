@@ -78,23 +78,23 @@
     "goal": {
       "type": "string"
     },
-    "dailyCaloriesIntake": {
+    "dailyCalorieIntake": {
       "type": "integer"
     },
-    "dailyCaloriesBurn": {
+    "dailyCalorieBurn": {
       "type": "integer"
     },
-    "food_log": {
+    "food_logs": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToMany",
       "target": "api::food-log.food-log",
-      "inversedBy": "users_permissions_users"
+      "mappedBy": "users_permissions_user"
     },
-    "activity_log": {
+    "activity_logs": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToMany",
       "target": "api::activity-log.activity-log",
-      "inversedBy": "users_permissions_users"
+      "mappedBy": "users_permissions_user"
     }
   }
 }

@@ -77,7 +77,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
             const { data } = await api.get('/api/food-logs', {
                 headers: { Authorization: `Bearer ${token}` }
             })
-            setAllFoodLogs(data.data)
+            setAllFoodLogs(data.data || data)
         } catch (error: any) {
             console.log(error.response?.data || error)
         }
@@ -89,7 +89,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
             const { data } = await api.get('/api/activity-logs', {
                 headers: { Authorization: `Bearer ${token}` }
             })
-            setAllActivityLogs(data.data)
+            setAllActivityLogs(data.data || data)
         } catch (error: any) {
             console.log(error.response?.data || error)
         }
