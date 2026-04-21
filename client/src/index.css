@@ -3,7 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@varient dark(&:where(.dark, .dark *))
+@custom-variant dark (&:where(.dark, .dark *));
 
 *{
     font-family: "Rethink Sans", sans-serif;
