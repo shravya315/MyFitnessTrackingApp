@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import type { FoodEntry } from "../types";
 import Card from "../components/ui/Card";
-import { quickActivitiesFoodLog, mealIcons } from "../assets/assets";
+import { quickActivitiesFoodLog } from "../assets/assets";
 import {
   Loader2Icon,
   PlusIcon,
@@ -45,7 +45,7 @@ const FoodLog = () => {
     }
 
     try {
-      const { data } = await api.post("/api/food-logs", { data: formData });
+      const { data } = await api.post("/api/food-logs", formData);
       setAllFoodLogs((prev) => [...prev, data]);
       setFormData({ name: "", calories: 0, mealType: "" });
       setShowForm(false);
@@ -104,11 +104,9 @@ const FoodLog = () => {
       else mealType = "dinner";
 
       const { data: newEntry } = await api.post("/api/food-logs", {
-        data: {
-          name: result.name,
-          calories: result.calories,
-          mealType,
-        },
+        name: result.name,
+        calories: result.calories,
+        mealType,
       });
 
       setAllFoodLogs((prev) => [...prev, newEntry]);
@@ -166,6 +164,7 @@ const FoodLog = () => {
             <Card>
               <form onSubmit={handleSubmit}>
                 <Input
+                  placeholder="Food name"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
@@ -174,6 +173,7 @@ const FoodLog = () => {
 
                 <Input
                   type="number"
+                  placeholder="Calories"
                   value={String(formData.calories)}
                   onChange={(e) =>
                     setFormData({
@@ -182,6 +182,23 @@ const FoodLog = () => {
                     })
                   }
                 />
+
+                <select
+                  value={formData.mealType}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      mealType: e.target.value as FoodEntry["mealType"],
+                    })
+                  }
+                  className="border p-2 w-full"
+                >
+                  <option value="">Select Meal</option>
+                  <option value="breakfast">Breakfast</option>
+                  <option value="lunch">Lunch</option>
+                  <option value="snack">Snack</option>
+                  <option value="dinner">Dinner</option>
+                </select>
 
                 <Button type="submit">Add</Button>
               </form>
@@ -195,28 +212,24 @@ const FoodLog = () => {
             </Card>
           ) : (
             <div>
-              {Object.keys(groupedEntries).map((meal) => {
-                  mealIcons[meal as keyof typeof mealIcons];
+              {Object.keys(groupedEntries).map((meal) => (
+                <Card key={meal}>
+                  <h3>{meal}</h3>
 
-                return (
-                  <Card key={meal}>
-                    <h3>{meal}</h3>
-
-                    {groupedEntries[meal].map((entry: FoodEntry) => (
-                      <div key={entry.documentId}>
-                        {entry.name} - {entry.calories}
-                        <button
-                          onClick={() =>
-                            handleDelete(entry.documentId || "")
-                          }
-                        >
-                          <Trash2Icon />
-                        </button>
-                      </div>
-                    ))}
-                  </Card>
-                );
-              })}
+                  {groupedEntries[meal].map((entry: FoodEntry) => (
+                    <div key={entry.documentId}>
+                      {entry.name} - {entry.calories}
+                      <button
+                        onClick={() =>
+                          handleDelete(entry.documentId || "")
+                        }
+                      >
+                        <Trash2Icon />
+                      </button>
+                    </div>
+                  ))}
+                </Card>
+              ))}
             </div>
           )}
         </div>

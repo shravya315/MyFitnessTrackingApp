@@ -163,9 +163,9 @@ const Onboarding = () => {
                 onChange={(e) => updateField("goal", e.target.value)}
                 className="login-input"
               >
-                <option value="lose">Lose Weight</option>
-                <option value="maintain">Maintain</option>
-                <option value="gain">Gain Weight</option>
+                <option value="lose">🔥Lose Weight</option>
+                <option value="maintain">⚖️Maintain</option>
+                <option value="gain">💪🏻Gain Weight</option>
               </select>
 
               <Input
